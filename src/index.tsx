@@ -1,8 +1,9 @@
 import React from "react";
 import ReactDOM from "react-dom";
+import styles from './index.scss';
 
 const App = () => (
-    <h1>React and TypeScript App</h1>
+    <h1 className={styles.headerStyle}>React and TypeScript App</h1>
 );
 
 ReactDOM.render(

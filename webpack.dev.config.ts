@@ -12,10 +12,10 @@ interface Configuration extends WebpackConfiguration {
 
 const config: Configuration = {
     mode: "development",
+    entry: "./src/index.tsx",
     output: {
         publicPath: "/"
     },
-    entry: "./src/index.tsx",
     module: {
         rules: [
             {
@@ -32,10 +32,38 @@ const config: Configuration = {
                     },
                 },
             },
+            {
+                test: /\.(sa|sc)ss$/,
+                use: [
+                    { 
+                        loader: "style-loader",
+                    },
+                    {
+                        loader: "css-modules-typescript-loader",
+                    },
+                    { 
+                        loader: "css-loader",
+                        options: {
+                            modules: true,
+                            sourceMap: true,                            
+                        },
+                    },
+                    {
+                        loader: "sass-loader",
+                    },
+                ],
+            },
+            {
+                test: /\.css$/,
+                use: [
+                    "style-loader",
+                    "css-loader"
+                ],
+            },
         ],
     },
     resolve: {
-        extensions: [".tsx", ".ts", ".js"]
+        extensions: [".tsx", ".ts", ".js", ".css", ".scss", ".sass"]
     },
     plugins: [
         new HtmlWebpackPlugin({

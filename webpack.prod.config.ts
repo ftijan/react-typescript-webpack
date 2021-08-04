@@ -4,6 +4,7 @@ import HtmlWebpackPlugin from "html-webpack-plugin";
 import ForkTsCheckerWebpackPlugin from "fork-ts-checker-webpack-plugin";
 import ESLintPlugin from "eslint-webpack-plugin";
 import { CleanWebpackPlugin } from "clean-webpack-plugin";
+import MiniCssExtractPlugin from "mini-css-extract-plugin";
 
 const config: webpack.Configuration = {
     mode: "production",
@@ -29,6 +30,31 @@ const config: webpack.Configuration = {
                     },
                 },
             },
+            {
+                test: /\.(sa|sc)ss$/,
+                use: [
+                    { 
+                        loader: MiniCssExtractPlugin.loader,
+                    },
+                    { 
+                        loader: "css-loader",
+                        options: {
+                            modules: true,
+                            sourceMap: false,                            
+                        },
+                    },
+                    {
+                        loader: "sass-loader",
+                    },
+                ],
+            },
+            {
+                test: /\.css$/,
+                use: [
+                    "style-loader",
+                    "css-loader"
+                ],
+            },
         ],
     },
     resolve: {
@@ -45,6 +71,10 @@ const config: webpack.Configuration = {
             extensions: ["js", "jsx", "ts", "tsx"],
         }),
         new CleanWebpackPlugin(),
+        new MiniCssExtractPlugin({
+            filename: "[name].[chunkhash].css",
+            chunkFilename: "[id].[chunkhash].css",
+        }),
     ],
 }
 

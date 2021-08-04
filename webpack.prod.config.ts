@@ -72,10 +72,17 @@ const config: webpack.Configuration = {
         }),
         new CleanWebpackPlugin(),
         new MiniCssExtractPlugin({
-            filename: "[name].[chunkhash].css",
-            chunkFilename: "[id].[chunkhash].css",
+            filename: "[name].[contenthash].css",
+            chunkFilename: "[id].[contenthash].css",
         }),
     ],
+    optimization: {
+        splitChunks: {
+            chunks: 'all',
+            name: false,
+        },
+        runtimeChunk: true
+    },
 }
 
 export default config;
